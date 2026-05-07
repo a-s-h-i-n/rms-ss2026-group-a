@@ -67,6 +67,22 @@ WORKDIR /root/ur5_ws/src
 RUN git clone https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git \
     git clone https://github.com/UniversalRobots/Universal_Robots_ROS2_GZ_Simulation.git
 
+# ros-gz packages
+RUN apt-get update && apt-get install -y curl gnupg lsb-release
+
+RUN curl -sSL https://packages.osrfoundation.org/gazebo.gpg \
+    -o /usr/share/keyrings/gazebo-archive-keyring.gpg
+
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/gazebo-archive-keyring.gpg] \
+http://packages.osrfoundation.org/gazebo/ubuntu-stable \
+$(lsb_release -cs) main" \
+> /etc/apt/sources.list.d/gazebo-stable.list
+
+RUN apt-get update && apt-get install -y \
+    ros-humble-ros-gz \
+    ros-humble-ros-gz-sim \
+    ros-humble-ros-gz-bridge
+
 WORKDIR /root/ur5_ws
 
 # -----------------------------------------------------------------------------
