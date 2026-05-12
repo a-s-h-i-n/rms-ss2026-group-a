@@ -64,8 +64,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /root/ur5_ws/src
 
 # Official UR ROS2 description
-RUN git clone https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git \
-    git clone https://github.com/UniversalRobots/Universal_Robots_ROS2_GZ_Simulation.git
+RUN git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Description.git
+RUN git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_GZ_Simulation.git
 
 # ros-gz packages
 RUN apt-get update && apt-get install -y curl gnupg lsb-release
