@@ -26,7 +26,6 @@ def launch_setup(context, *args, **kwargs):
     initial_positions_file = LaunchConfiguration("initial_positions_file")
     description_package = LaunchConfiguration("description_package")
     description_file = LaunchConfiguration("description_file")
-    description_file = LaunchConfiguration("description_file")
     prefix = LaunchConfiguration("prefix")
     start_joint_controller = LaunchConfiguration("start_joint_controller")
     initial_joint_controller = LaunchConfiguration("initial_joint_controller")
@@ -120,6 +119,15 @@ def launch_setup(context, *args, **kwargs):
         arguments=[initial_joint_controller, "-c", "/controller_manager"],
         condition=IfCondition(start_joint_controller),
     )
+
+    # Spawner for gripper controller
+    gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gripper_position_controller", "-c", "/controller_manager"],
+        output="screen",
+    )
+
     initial_joint_controller_spawner_stopped = Node(
         package="controller_manager",
         executable="spawner",
@@ -152,6 +160,7 @@ def launch_setup(context, *args, **kwargs):
         delay_rviz_after_joint_state_broadcaster_spawner,
         initial_joint_controller_spawner_stopped,
         initial_joint_controller_spawner_started,
+        gripper_controller_spawner,
         gazebo,
         gazebo_spawn_robot,
     ]
@@ -250,7 +259,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "prefix",
-            default_value='""',
+            default_value='',
             description="Prefix of the joint names, useful for \
         multi-robot setup. If changed than also joint names in the controllers' configuration \
         have to be updated.",

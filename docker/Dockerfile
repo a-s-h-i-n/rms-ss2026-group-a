@@ -41,10 +41,10 @@ RUN rosdep init || true && rosdep update
 # -----------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y \
     ros-humble-ur \
-    ros-humble-ur-description \
     ros-humble-ur-moveit-config \
     ros-humble-moveit \
     ros-humble-moveit-ros-planning-interface \
+    ros-humble-moveit-setup-assistant \
     ros-humble-gazebo-ros-pkgs \
     ros-humble-gazebo-ros2-control \
     ros-humble-gazebo-plugins \

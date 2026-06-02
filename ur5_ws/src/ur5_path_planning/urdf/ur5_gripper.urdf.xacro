@@ -150,4 +150,16 @@
     </gazebo>
   </xacro:if>
 
+  <!-- Robotiq 2f 85 Gripper URDF -->
+    <xacro:arg name="use_fake_hardware" default="true" />
+    <xacro:arg name="com_port" default="/dev/ttyUSB0" />
+
+    <!-- Import macros -->
+    <xacro:include filename="$(find ur5_path_planning)/urdf/robotiq_2f_85_macro.urdf.xacro" />
+
+    <!-- <link name="world" /> -->
+    <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="tool0" use_fake_hardware="$(arg use_fake_hardware)" com_port="$(arg com_port)" sim_gazebo="$(arg sim_gazebo)">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:robotiq_gripper>
+
 </robot>
